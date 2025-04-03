@@ -17,7 +17,7 @@ export async function GET({ url }) {
 
     return json(data) 
   } catch(error) {
-    console.error(error)
+    console.error('api error', error)
     return json({ message: 'error fetching search'}, { status: 500 })
   }
 }
