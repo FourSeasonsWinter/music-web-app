@@ -1,5 +1,7 @@
 <script>
-  let { imageUrl, songName, artists } = $props()
+  import { fade } from 'svelte/transition'
+
+  const { imageUrl, songName, artists, delay = 0 } = $props()
 
   let artistsString = artists[0].name
   if (artists.length > 1) {
@@ -8,7 +10,7 @@
   }
 </script>
 
-<li>
+<li in:fade={{ delay: delay }}>
   <img src={imageUrl} alt="" />
   <span>{songName}</span>
   <span class="artist">{artistsString}</span>
@@ -25,7 +27,7 @@
     width: 200px;
     height: 200px;
     border-radius: 10px;
-    margin-bottom: .4rem;
+    margin-bottom: 0.4rem;
   }
 
   span {
@@ -36,9 +38,9 @@
   }
 
   .artist {
-    opacity: .6;
+    opacity: 0.6;
     font-size: small;
     font-weight: 100;
-    margin-top: .6rem;
+    margin-top: 0.6rem;
   }
 </style>

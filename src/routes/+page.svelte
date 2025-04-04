@@ -11,6 +11,8 @@
   const { token, artistData } = data
 
   let searchResults = $state.raw()
+
+  $inspect(searchResults)
 </script>
 
 <TopBar onSearch={(data) => searchResults = data} />

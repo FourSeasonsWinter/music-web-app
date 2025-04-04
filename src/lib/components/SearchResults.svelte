@@ -1,4 +1,5 @@
 <script>
+  import { fly } from 'svelte/transition'
   import AlbumCard from './AlbumCard.svelte'
   import ArtistCard from './ArtistCard.svelte'
   import SongCard from './SongCard.svelte'
@@ -10,35 +11,41 @@
 
 <main>
   {#if searchResults != undefined}
-    <section>
+    <section in:fly={{ y: 20 }}>
       <h2>Songs</h2>
       <ol>
-        {#each searchResults.tracks.items as track (track.id)}
+        {#each searchResults.tracks.items.filter((t) => t.album.images[1].height === t.album.images[1].width) as track, index (track.id)}
           <SongCard
             imageUrl={track.album.images[1].url}
             songName={track.name}
             artists={track.artists}
+            delay={index * 100}
           />
         {/each}
       </ol>
     </section>
 
-    <section>
+    <section in:fly={{ y: 20 }}>
       <h2>Artists</h2>
       <ol>
-        {#each searchResults.artists.items.filter((a) => a.images.length > 0) as artist (artist.id)}
-          <ArtistCard name={artist.name} imageUrl={artist.images[1].url} />
+        {#each searchResults.artists.items.filter((a) => a.images.length) as artist, index (artist.id)}
+          <ArtistCard
+            name={artist.name}
+            imageUrl={artist.images[1].url}
+            delay={index * 100}
+          />
         {/each}
       </ol>
     </section>
 
-    <section>
+    <section in:fly={{ y: 20 }}>
       <h2 class="albums-title">Albums</h2>
       <ol>
         {#each searchResults.albums.items as album, index (album.id)}
           <AlbumCard
             imageUrl={album.images[1].url}
             name={album.name}
+            delay={index * 100}
             --color={albumColors[index]}
           />
         {/each}

@@ -1,17 +1,26 @@
 <script>
-  let searchQuery = $state('')
+  import { fade } from "svelte/transition"
+  import Loading from "./Loading.svelte"
+
   let { onSearch } = $props()
+  let searchQuery = $state('')
+
+  let loading = $state(false)
 
   $effect(() => {
     searchQuery
     const timer = setTimeout(async () => {
       if (searchQuery.length <= 1) return
 
+      loading = true
+
       const response = await fetch(`/api/search?query=${searchQuery}`)
       const data = await response.json()
 
+      loading = false
+
       onSearch(data)
-    }, 800)
+    }, 700)
 
     return () => {
       clearTimeout(timer)
@@ -20,13 +29,16 @@
 </script>
 
 <label>
-  <img src="/search.svg" alt="">
+  <img src="/search.svg" alt="" />
   <input
     type="text"
     bind:value={searchQuery}
     placeholder="Search"
     autocomplete="off"
   />
+  {#if loading}
+    <p transition:fade={{duration: 80}}><Loading --size="40px" /></p>
+  {/if}
 </label>
 
 <style>
@@ -39,11 +51,12 @@
     width: 18rem;
     padding: 1rem 0;
     padding-left: 3.4rem;
-    transition: border .2s ease-out;
+    transition: border 0.2s ease-out;
     font-size: 14px;
   }
 
-  input:hover, input:focus {
+  input:hover,
+  input:focus {
     border: 2px solid #292929;
   }
 
@@ -53,8 +66,15 @@
 
   img {
     position: absolute;
-    left: .6rem;
-    top: .4rem;
+    left: 0.6rem;
+    top: 0.4rem;
     cursor: pointer;
+  }
+
+  p {
+    position: absolute;
+    right: -56px;
+    top: 50%;
+    translate: 0 -50%;
   }
 </style>

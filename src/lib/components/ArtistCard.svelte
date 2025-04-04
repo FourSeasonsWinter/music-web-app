@@ -1,8 +1,10 @@
 <script>
-  const {name, imageUrl} = $props()
+  import { fade } from 'svelte/transition'
+
+  const { name, imageUrl, delay = 0 } = $props()
 </script>
 
-<li>
+<li in:fade={{ delay: delay }}>
   <img src={imageUrl} alt="" />
   <span>{name}</span>
 </li>
@@ -12,7 +14,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: .9rem;
+    gap: 0.9rem;
     cursor: pointer;
   }
 

@@ -1,8 +1,10 @@
 <script>
-  const { imageUrl, name, color } = $props()
+  import { fade } from 'svelte/transition'
+
+  const { imageUrl, name, delay = 0 } = $props()
 </script>
 
-<li>
+<li in:fade={{ delay: delay }}>
   <img src={imageUrl} alt="" />
   <span>{name}</span>
 </li>
@@ -11,7 +13,7 @@
   li {
     display: flex;
     flex-direction: column;
-    gap: .6rem;
+    gap: 0.6rem;
     width: 200px;
     position: relative;
     box-shadow: 0 -1px 1px black;
@@ -29,29 +31,29 @@
     content: '';
     position: absolute;
     z-index: -10;
-    top: -9px; /* Move the shadow above the square */
-    left: 50%; /* Center it horizontally */
+    top: -9px;
+    left: 50%;
     transform: translateX(-50%);
-    width: 182px; /* Smaller width than the square */
-    height: 10px; /* Height of the shadow */
+    width: 182px;
+    height: 10px;
     background-color: var(--color, rgb(13, 75, 17));
-    border-radius: 10px 10px 0 0; /* Optional: rounded edges */
+    border-radius: 10px 10px 0 0;
     box-shadow: 0 -1px 1px black;
-    filter: brightness(.3);
+    filter: brightness(0.3);
   }
 
   li::after {
     content: '';
     position: absolute;
     z-index: -20;
-    top: -14px; /* Move the shadow above the square */
-    left: 50%; /* Center it horizontally */
+    top: -14px;
+    left: 50%;
     transform: translateX(-50%);
-    width: 160px; /* Smaller width than the square */
-    height: 10px; /* Height of the shadow */
+    width: 160px;
+    height: 10px;
     background-color: var(--color, rgb(5, 49, 8));
-    border-radius: 10px 10px 0 0; /* Optional: rounded edges */
-    filter: brightness(.3);
-    opacity: .6;
+    border-radius: 10px 10px 0 0;
+    filter: brightness(0.3);
+    opacity: 0.6;
   }
 </style>
